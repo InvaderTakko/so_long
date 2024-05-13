@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/05/13 18:07:05 by sruff            ###   ########.fr       */
+/*   Updated: 2024/05/13 18:58:36 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int	main(int argc, char **argv)
 	g.mlx_ptr = mlx_init(512, 512, "game of the year", true); 
 	if (!g.mlx_ptr)
 		exit(EXIT_FAILURE);
-	
+	mlx_new_image(g.mlx_ptr, 100, 100);
 	return (0);	
 }
