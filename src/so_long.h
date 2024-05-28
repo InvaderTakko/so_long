@@ -6,33 +6,43 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/05/13 17:27:20 by sruff            ###   ########.fr       */
+/*   Updated: 2024/05/28 17:41:13 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "../MLX42/include/MLX42/MLX42.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
-typedef struct s_game
+# define TILE_SIZE 50
+
+# include <stdlib.h>
+# include "./libft/libft.h"
+# include "../MLX42/include/MLX42/MLX42.h"
+# include <stdbool.h>
+
+typedef struct s_map
 {
-	void	*mlx_ptr;
-	t_player	player;
-	t_map	map;
-	
-}	t_game;
-
+	u_int32_t		x;
+	u_int32_t		y;
+	char	**map_ptr;
+}	t_map;
 typedef struct s_player
 {
 	int		x;
 	int		y;
 	int		steps;
 }	t_player;
-
-typedef struct s_map
+typedef struct s_game
 {
-	int		x;
-	int		y;
-}	t_map;
+	void	*mlx_ptr;
+	mlx_image_t *img;
+	t_player	player;
+	t_map	map;
+	
+}	t_game;
+
+
+
+
+
+#endif
