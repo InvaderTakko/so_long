@@ -6,7 +6,50 @@
 #    By: sruff <sruff@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 14:23:17 by sruff             #+#    #+#              #
-#    Updated: 2024/05/13 18:10:25 by sruff            ###   ########.fr        #
+#    Updated: 2024/05/28 13:28:24 by sruff            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+# NAME    := so_long
+# CFLAGS  := -Wextra -Wall -Werror -Wunreachable-code -Ofast
+# LIBMLX  := ./MLX42
+# HEADERS := -I./include -I$(LIBMLX)/include -I . -I libft ./src/libft make -C libft
+# LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+# SRCS    := $(shell find ./src -iname "*.c")
+# OBJS    := ${SRCS:.c=.o}
+# all: libmlx $(NAME)
+
+# libmlx:
+# 	git submodule update MLX42
+# 	@cmake $(LIBMLX) -B $(LIBMLX)/build
+# 	@cmake --build $(LIBMLX)/build -j4 
+
+# %.o: %.c
+# 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
+	
+# $(NAME): $(OBJS)
+# 	@$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	
+# clean:
+# 	@rm -rf $(OBJS)
+	
+# fclean: clean
+# 	@rm -rf $(NAME)
+# 	@rm -rf $(LIBMLX)/build
+	
+# re: fclean all
+# .PHONY: all clean fclean re libmlx
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sruff <sruff@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/05/13 14:23:17 by sruff             #+#    #+#              #
+#    Updated: 2024/05/28 13:23:28 by sruff            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,16 +57,21 @@
 NAME    := so_long
 CFLAGS  := -Wextra -Wall -Werror -Wunreachable-code -Ofast
 LIBMLX  := ./MLX42
-HEADERS := -I./include -I$(LIBMLX)/include
-LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBFT   := ./src/libft
+HEADERS := -I./include -I$(LIBMLX)/include -I . -I $(LIBFT)
+LIBS    := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L$(LIBFT) -lft
 SRCS    := $(shell find ./src -iname "*.c")
 OBJS    := ${SRCS:.c=.o}
-all: libmlx $(NAME)
+
+all: libmlx libft $(NAME)
 
 libmlx:
 	git submodule update MLX42
 	@cmake $(LIBMLX) -B $(LIBMLX)/build
 	@cmake --build $(LIBMLX)/build -j4 
+
+libft:
+	$(MAKE) -C $(LIBFT)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
@@ -33,10 +81,13 @@ $(NAME): $(OBJS)
 	
 clean:
 	@rm -rf $(OBJS)
+	$(MAKE) -C $(LIBFT) clean
 	
 fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(LIBMLX)/build
+	$(MAKE) -C $(LIBFT) fclean
 	
 re: fclean all
-.PHONY: all clean fclean re libmlx
+
+.PHONY: all clean fclean re libmlx libft
