@@ -6,11 +6,27 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/05/28 17:52:42 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/02 15:34:45 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+
+
+static void dank_load(void *param)
+{
+	
+	// mlx_image_t *img;
+	t_game *g = (t_game *)param;
+	// g->text.texture = mlx_load_png("/Users/sruff/Desktop/42Projects/so_long/dank.png");
+	// ft_printf("texture: %p\n", g->text.texture);
+	g->text.img = mlx_texture_to_image(g->mlx_ptr, g->text.texture);
+	// ft_printf("img: %p\n", g->text.img);
+	if (!mlx_resize_image(g->text.img, 100, 100))
+		   return;	
+	mlx_image_to_window(g->mlx_ptr, g->text.img, g->player.x, g->player.y);
+}
 
 static int32_t random_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
@@ -21,6 +37,8 @@ static void	set_pixels(void *param)
 {
 	u_int32_t x;
 	u_int32_t y;
+	// mlx_texture_t *texture = mlx_load_png("/Users/sruff/Desktop/42Projects/so_long/dank.png");
+	// mlx_image_t *img;
     (void)param;
     t_game *g = (t_game *)param;
     g->img = mlx_new_image(g->mlx_ptr, (g->map.x * TILE_SIZE), (g->map.y * TILE_SIZE));
@@ -36,7 +54,52 @@ static void	set_pixels(void *param)
         }
         y++;
     }
+	// img = mlx_texture_to_image(g->mlx_ptr, texture);
+	// if (!mlx_resize_image(img, 300, 300))
+    //        return;	
     mlx_image_to_window(g->mlx_ptr, g->img, 0, 0);
+	// mlx_image_to_window(g->mlx_ptr, img, 0, 0);
+	// mlx_load_png("./dank.png");
+
+}
+static void loop_fnc(void *param)
+{
+	t_game *g = (t_game *)param;
+	// mlx_image_to_window(g->mlx_ptr, g->img, 0, 0);
+	set_pixels(g);
+	dank_load(g);
+}
+
+static void key_press(mlx_key_data_t key_data, void *param)
+{
+	t_game *g = (t_game *)param;
+	// ft_printf("Keycode: %d\n", key_data.key);
+	if (key_data.key == MLX_KEY_W || key_data.key == MLX_KEY_UP)
+	{
+		g->player.y -= 10;
+		ft_printf("UP\n");
+	}
+	else if (key_data.key == MLX_KEY_S || key_data.key == MLX_KEY_DOWN)
+	{
+		g->player.y += 10;
+		ft_printf("DOWN\n");
+	}
+	else if (key_data.key == MLX_KEY_A || key_data.key == MLX_KEY_LEFT)
+	{
+		g->player.x -= 10;
+		ft_printf("LEFT\n");
+	}
+	else if (key_data.key == MLX_KEY_D || key_data.key == MLX_KEY_RIGHT)
+	{
+		g->player.x += 10;
+		ft_printf("RIGHT\n");
+	}
+	else if (key_data.key == MLX_KEY_ESCAPE)
+	{
+		ft_printf("ESC\n");
+		exit(EXIT_SUCCESS);
+	}
+	(void)g;
 }
 static void render_map(t_game *g)
 {
@@ -123,8 +186,13 @@ int	main(int argc, char **argv)
 	// init_game(&g, argv[1]);
 	g.mlx_ptr = mlx_init(512, 512, "game of the year", true);
 	load_map(&g, argv[1]);
+	g.text.texture = mlx_load_png("/Users/sruff/Desktop/42Projects/so_long/dank.png");
+	dank_load(&g);
 	// render_map
-	mlx_loop_hook(g.mlx_ptr, set_pixels, &g);
+	mlx_key_hook(g.mlx_ptr, key_press, &g);
+	// mlx_loop_hook(g.mlx_ptr, set_pixels, &g);
+	// mlx_loop_hook(g.mlx_ptr, dank_load, &g);
+	mlx_loop_hook(g.mlx_ptr, loop_fnc, &g);
 	// mlx_loop_hook(g.mlx_ptr, ft_hook, mlx);
 
 	mlx_loop(g.mlx_ptr);

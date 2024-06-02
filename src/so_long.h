@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/05/28 17:41:13 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/02 14:40:25 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include <stdbool.h>
 
+typedef struct s_texture
+{
+	mlx_image_t	*img;
+	mlx_texture_t	*texture;
+}	t_texture;
 typedef struct s_map
 {
 	u_int32_t		x;
@@ -38,6 +43,7 @@ typedef struct s_game
 	mlx_image_t *img;
 	t_player	player;
 	t_map	map;
+	t_texture text;
 	
 }	t_game;
 
