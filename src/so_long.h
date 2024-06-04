@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/02 19:16:14 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/04 19:41:28 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define IMG_NUM 4
 # define IMG_TILE "./img/floors.png"
 # define IMG_PLAYER "./img/dank.png"
-# define IMG_START "./img/start.png"
+# define IMG_WALL "./img/wall.png"
 # define IMG_GOAL "./img/goal.png"
 
 
@@ -62,6 +62,8 @@ typedef struct s_game
 
 void render_loop(void *param);
 void load_map(t_game *g, const char *map_name);
+void check_next_tile(t_game *g, int x, int y);
+// void load_tile(t_game *g, char c , int x, int y);
 
 
 

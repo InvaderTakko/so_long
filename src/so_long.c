@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/02 20:11:21 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/04 19:35:09 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,35 @@
 static void key_press(mlx_key_data_t key_data, void *param)
 {
 	t_game *g = (t_game *)param;
+	int	old_y;
+	int	old_x;
+
+	old_y = g->player.y;
+	old_x = g->player.x;
 	// ft_printf("Keycode: %d\n", key_data.key);
-	if (key_data.key == MLX_KEY_W || key_data.key == MLX_KEY_UP)
+	// if (key_data.key == MLX_KEY_W || key_data.key == MLX_KEY_UP)
+	if ((key_data.key == MLX_KEY_W || key_data.key == MLX_KEY_UP) && (key_data.action == MLX_PRESS || key_data.action == MLX_REPEAT ))
 	{
-		g->player.y -= 1;
+		// g->player.y -= 1;
+		check_next_tile(g, g->player.x, g->player.y - 1);
 		ft_printf("UP\n");
 	}
-	else if (key_data.key == MLX_KEY_S || key_data.key == MLX_KEY_DOWN)
+	else if ((key_data.key == MLX_KEY_S || key_data.key == MLX_KEY_DOWN) && (key_data.action == MLX_PRESS || key_data.action == MLX_REPEAT ))
 	{
-		g->player.y += 1;
+		// g->player.y += 1;
+		check_next_tile(g, g->player.x, g->player.y + 1);
 		ft_printf("DOWN\n");
 	}
-	else if (key_data.key == MLX_KEY_A || key_data.key == MLX_KEY_LEFT)
+	else if ((key_data.key == MLX_KEY_A || key_data.key == MLX_KEY_LEFT) && (key_data.action == MLX_PRESS || key_data.action == MLX_REPEAT ))
 	{
-		g->player.x -= 1;
+		// g->player.x -= 1;
+		check_next_tile(g, g->player.x - 1, g->player.y);
 		ft_printf("LEFT\n");
 	}
-	else if (key_data.key == MLX_KEY_D || key_data.key == MLX_KEY_RIGHT)
+	else if ((key_data.key == MLX_KEY_D || key_data.key == MLX_KEY_RIGHT) && (key_data.action == MLX_PRESS || key_data.action == MLX_REPEAT ))
 	{
-		g->player.x += 1;
+		// g->player.x += 1;
+		check_next_tile(g, g->player.x + 1, g->player.y);
 		ft_printf("RIGHT\n");
 		
 	}
@@ -48,6 +58,7 @@ static void key_press(mlx_key_data_t key_data, void *param)
 		// mlx_destroy_window(g->mlx_ptr);
 		exit(EXIT_SUCCESS);
 	}
+	mlx_image_to_window(g->mlx_ptr, (g->text.img)[0], old_x * TILE_SIZE, old_y * TILE_SIZE);
 	mlx_image_to_window(g->mlx_ptr, (g->text.img)[1], g->player.x * TILE_SIZE, g->player.y * TILE_SIZE);
 	// update_render(param);
 	(void)g;
