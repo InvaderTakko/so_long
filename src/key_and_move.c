@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:14:13 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/04 19:47:32 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/04 20:32:39 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void check_next_tile(t_game *g, int x, int y)
 {
 	if (g->map.map_ptr[y][x] == '1')
 	{
-		g->player.steps++;
-		//increase step but not coordinate
+		// g->player.steps++;
+		//increase nothing
 	}	
 	else if (g->map.map_ptr[y][x] == '0' || g->map.map_ptr[y][x] == 'P')
 	{
@@ -39,4 +39,5 @@ void check_next_tile(t_game *g, int x, int y)
 		g->player.steps++;
 		//succes
 	}
+	ft_printf("Steps: %d\n", g->player.steps);
 }

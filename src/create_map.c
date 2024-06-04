@@ -6,22 +6,31 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 16:47:28 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/02 20:09:09 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/04 20:23:59 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void check_tile(t_game *g, char c , int x, int y)
+static void load_tile(t_game *g, char c , int x, int y)
 {
 	if (c == '0')
 		mlx_image_to_window(g->mlx_ptr, (g->text.img)[0], x * TILE_SIZE, y * TILE_SIZE);
 	else if (c == '1')
-		mlx_image_to_window(g->mlx_ptr, (g->text.img)[0], x * TILE_SIZE, y * TILE_SIZE);
+		mlx_image_to_window(g->mlx_ptr, (g->text.img)[2], x * TILE_SIZE, y * TILE_SIZE);
 	else if (c == 'E')
 		mlx_image_to_window(g->mlx_ptr, (g->text.img)[3], x * TILE_SIZE, y * TILE_SIZE);
 	else if (c == 'P')
-		mlx_image_to_window(g->mlx_ptr, (g->text.img)[1], x * TILE_SIZE, y * TILE_SIZE);			
+	{
+		mlx_image_to_window(g->mlx_ptr, (g->text.img)[1], x * TILE_SIZE, y * TILE_SIZE);
+		g->player.x = x;
+		g->player.y = y;
+	}
+	else if (c == 'C')
+	{
+		mlx_image_to_window(g->mlx_ptr, (g->text.img)[0], x * TILE_SIZE, y * TILE_SIZE);
+		mlx_image_to_window(g->mlx_ptr, (g->text.img)[4], x * TILE_SIZE, y * TILE_SIZE);
+	}
 }
 
 static void load_pngs(t_game *g)
@@ -29,9 +38,10 @@ static void load_pngs(t_game *g)
 	int	i = 0;
 	(g->text.texture)[0] = mlx_load_png(IMG_TILE);
 	(g->text.texture)[1] = mlx_load_png(IMG_PLAYER);
-	(g->text.texture)[2] = mlx_load_png(IMG_START);
+	(g->text.texture)[2] = mlx_load_png(IMG_WALL);
 	(g->text.texture)[3] = mlx_load_png(IMG_GOAL);
-	while (i <= 3)
+	(g->text.texture)[4] = mlx_load_png(IMG_COLLECT);
+	while (i <= 4)
 	{
 		(g->text.img)[i] = mlx_texture_to_image(g->mlx_ptr, (g->text.texture)[i]);
 		mlx_resize_image((g->text.img)[i], TILE_SIZE, TILE_SIZE);
@@ -52,7 +62,7 @@ static void	spawn_objects(t_game *g)
 		while (x <= g->map.x - 1)
 		{
 			c = map[y][x];
-			check_tile(g, c, x, y);
+			load_tile(g, c, x, y);
 			x++;
 		}
 		x = 0;

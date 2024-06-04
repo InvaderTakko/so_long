@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/04 19:41:28 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/04 20:21:37 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define SO_LONG_H
 
 # define TILE_SIZE 50
-# define IMG_NUM 4
+# define IMG_NUM 5
 # define IMG_TILE "./img/floors.png"
 # define IMG_PLAYER "./img/dank.png"
 # define IMG_WALL "./img/wall.png"
 # define IMG_GOAL "./img/goal.png"
+# define IMG_COLLECT "./img/collect.png"
 
 
 

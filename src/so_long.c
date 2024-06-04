@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/04 19:35:09 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/04 21:07:29 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,26 @@ static void key_press(mlx_key_data_t key_data, void *param)
 	{
 		// g->player.y -= 1;
 		check_next_tile(g, g->player.x, g->player.y - 1);
-		ft_printf("UP\n");
+		// ft_printf("UP\n");
+		// ft_printf("Steps: %d\n", g->player.steps);
 	}
 	else if ((key_data.key == MLX_KEY_S || key_data.key == MLX_KEY_DOWN) && (key_data.action == MLX_PRESS || key_data.action == MLX_REPEAT ))
 	{
 		// g->player.y += 1;
 		check_next_tile(g, g->player.x, g->player.y + 1);
-		ft_printf("DOWN\n");
+		// ft_printf("DOWN\n");
 	}
 	else if ((key_data.key == MLX_KEY_A || key_data.key == MLX_KEY_LEFT) && (key_data.action == MLX_PRESS || key_data.action == MLX_REPEAT ))
 	{
 		// g->player.x -= 1;
 		check_next_tile(g, g->player.x - 1, g->player.y);
-		ft_printf("LEFT\n");
+		// ft_printf("LEFT\n");
 	}
 	else if ((key_data.key == MLX_KEY_D || key_data.key == MLX_KEY_RIGHT) && (key_data.action == MLX_PRESS || key_data.action == MLX_REPEAT ))
 	{
 		// g->player.x += 1;
 		check_next_tile(g, g->player.x + 1, g->player.y);
-		ft_printf("RIGHT\n");
+		// ft_printf("RIGHT\n");
 		
 	}
 	else if (key_data.key == MLX_KEY_ESCAPE)
@@ -120,10 +121,11 @@ int	main(int argc, char **argv)
 		ft_printf("Map: good\n");
 	}
 	// init_game(&g, argv[1]);
-	// mlx_get_monitor_size(0, &window_size.x, &window_size.y);
+	
 	// ft_printf("X: %d Y: %d\n", window_size.x, window_size.y);
 	// g.mlx_ptr = mlx_init(window_size.x, window_size.y, "game of the year", true);
 	g.mlx_ptr = mlx_init(512, 512, "game of the year", true);
+	// mlx_get_monitor_size(0, &window_size.x, &window_size.y);
 	load_map(&g, argv[1]);
 	// g.text.texture = mlx_load_png("/Users/sruff/Desktop/42Projects/so_long/dank.png");
 	// render_map
