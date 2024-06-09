@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 16:47:28 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/04 20:23:59 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/09 19:34:48 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ static void load_tile(t_game *g, char c , int x, int y)
 	else if (c == '1')
 		mlx_image_to_window(g->mlx_ptr, (g->text.img)[2], x * TILE_SIZE, y * TILE_SIZE);
 	else if (c == 'E')
+	{
 		mlx_image_to_window(g->mlx_ptr, (g->text.img)[3], x * TILE_SIZE, y * TILE_SIZE);
+		g->map.exit_x = x;
+		g->map.exit_y = y;
+	}	
 	else if (c == 'P')
 	{
 		mlx_image_to_window(g->mlx_ptr, (g->text.img)[1], x * TILE_SIZE, y * TILE_SIZE);
@@ -30,6 +34,7 @@ static void load_tile(t_game *g, char c , int x, int y)
 	{
 		mlx_image_to_window(g->mlx_ptr, (g->text.img)[0], x * TILE_SIZE, y * TILE_SIZE);
 		mlx_image_to_window(g->mlx_ptr, (g->text.img)[4], x * TILE_SIZE, y * TILE_SIZE);
+		g->map.amount_collectibles++;
 	}
 }
 
@@ -46,7 +51,7 @@ static void load_pngs(t_game *g)
 		(g->text.img)[i] = mlx_texture_to_image(g->mlx_ptr, (g->text.texture)[i]);
 		mlx_resize_image((g->text.img)[i], TILE_SIZE, TILE_SIZE);
 		i++;
-	}	
+	}
 }
 
 static void	spawn_objects(t_game *g)
@@ -127,5 +132,6 @@ void load_map(t_game *g, const char *map_name)
 	}
 	ft_printf("after GNL loop\n");
 	set_map(g, map_str);
+	// create_visited(g);
 	close(fd);
 }

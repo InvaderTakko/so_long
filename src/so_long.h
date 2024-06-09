@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/04 20:21:37 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/09 17:46:13 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ typedef struct s_map
 {
 	u_int32_t		x;
 	u_int32_t		y;
+	int				amount_collectibles;
+	int				exit_x;
+	int				exit_y;
+	char			**visited;
 	char	**map_ptr;
 }	t_map;
 typedef struct s_player
@@ -50,6 +54,7 @@ typedef struct s_player
 	int		x;
 	int		y;
 	int		steps;
+	int		collected;
 }	t_player;
 typedef struct s_game
 {
@@ -64,6 +69,8 @@ typedef struct s_game
 void render_loop(void *param);
 void load_map(t_game *g, const char *map_name);
 void check_next_tile(t_game *g, int x, int y);
+void	create_visited(t_game *g);
+int flood_fill(t_game *g, int x, int y);
 // void load_tile(t_game *g, char c , int x, int y);
 
 

@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:14:13 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/04 20:32:39 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/09 15:20:23 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ void check_next_tile(t_game *g, int x, int y)
 		//succes
 	}
 	ft_printf("Steps: %d\n", g->player.steps);
+
 }

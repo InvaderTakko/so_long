@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/04 21:07:29 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/09 19:35:22 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int	main(int argc, char **argv)
 {
 	t_game	g;
 	// window_size_t window_size = {1, 1};
-	
+	g.player.steps = 0;
+	g.map.amount_collectibles = 0;
 	if (argc != 2)
 	{
 		ft_printf("Error: input should look like \"./so_long <map.ber>\"\n ");
@@ -127,6 +128,7 @@ int	main(int argc, char **argv)
 	g.mlx_ptr = mlx_init(512, 512, "game of the year", true);
 	// mlx_get_monitor_size(0, &window_size.x, &window_size.y);
 	load_map(&g, argv[1]);
+	create_visited(&g);
 	// g.text.texture = mlx_load_png("/Users/sruff/Desktop/42Projects/so_long/dank.png");
 	// render_map
 	mlx_key_hook(g.mlx_ptr, key_press, &g);
