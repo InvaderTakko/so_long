@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 16:47:28 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/09 19:34:48 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/16 18:15:15 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	set_map(t_game *g, char *map_str)
 }
 
 
-void load_map(t_game *g, const char *map_name)
+int load_map(t_game *g, const char *map_name)
 {
 	int		fd;
 	char	*line;
@@ -116,22 +116,30 @@ void load_map(t_game *g, const char *map_name)
 		exit(EXIT_FAILURE);
 	}
 	map_str = malloc(sizeof(char));
+	map_str[0] =  '\0';
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 		{
-			free(line);
+			// free(line);
 			break ;
 		}	
 		temp_ptr = ft_strjoin(map_str, line);
 		free(map_str);
 		free(line);
+		if (!temp_ptr)
+			return 0;
 		map_str = temp_ptr;
 		
 	}
 	ft_printf("after GNL loop\n");
-	set_map(g, map_str);
+	if	(map_str && *map_str)
+		set_map(g, map_str);
+	else
+		return (ft_printf("map is empty \n"), 0);
+	// free(map_str);	
 	// create_visited(g);
 	close(fd);
+	return 1;
 }

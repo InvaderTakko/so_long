@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/16 17:10:53 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/16 18:08:34 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_game
 }	t_game;
 
 void render_loop(void *param);
-void load_map(t_game *g, const char *map_name);
+int load_map(t_game *g, const char *map_name);
 void check_next_tile(t_game *g, int x, int y);
 void	create_visited(t_game *g);
 int flood_fill(t_game *g, int x, int y);
