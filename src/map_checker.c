@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:03:15 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/16 17:26:40 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/16 17:46:23 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_rectangle(t_game *g)
 	x_len = g->map.x;
 	while (y < g->map.y)
 	{
-		if (x_len != g->map.x)
+		if (x_len != ft_strlen(g->map.map_ptr[y]))
 			return (0);
 		y++;
 	}
@@ -82,7 +82,7 @@ int collect_reachable(t_game *g)
 		x = 0;
 		while (x < g->map.x)
 		{
-			ft_printf("map: %c\n visited: %c\n",g->map.map_ptr[y][x], g->map.visited[y][x]);
+			// ft_printf("map: %c\n visited: %c\n",g->map.map_ptr[y][x], g->map.visited[y][x]);
 			if (g->map.visited[y][x] != '1' && g->map.map_ptr[y][x] == 'C')
 				return (0);
 			x++;	
