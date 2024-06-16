@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:03:15 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/16 17:46:23 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/16 18:46:51 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int flood_fill(t_game *g, int x, int y) // add input to differentiate between ma
         return (0);
 	if (g->map.visited[y][x] == '1' || g->map.map_ptr[y][x] == '1')
 		return 0;
-    if (g->map.map_ptr[y][x] == 'P')
-        return (1);
+    // if (g->map.map_ptr[y][x] == 'P')
+    //     return (1);
 	// ft_printf("do i get here \n");
     if (g->map.map_ptr[y][x] == 'C')
         g->player.collected++;

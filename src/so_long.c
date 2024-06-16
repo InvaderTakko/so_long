@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/16 17:24:30 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/16 19:25:07 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ static void key_press(mlx_key_data_t key_data, void *param)
 		exit(EXIT_SUCCESS);
 	}
 	mlx_image_to_window(g->mlx_ptr, (g->text.img)[0], old_x * TILE_SIZE, old_y * TILE_SIZE);
+	if (old_x == g->map.exit_x && old_y == g->map.exit_y)
+		mlx_image_to_window(g->mlx_ptr, (g->text.img)[3], old_x * TILE_SIZE, old_y * TILE_SIZE);
 	mlx_image_to_window(g->mlx_ptr, (g->text.img)[1], g->player.x * TILE_SIZE, g->player.y * TILE_SIZE);
+
 	// update_render(param);
 	(void)g;
 }
@@ -104,7 +107,11 @@ static void key_press(mlx_key_data_t key_data, void *param)
 int	main(int argc, char **argv)
 {
 	t_game	g;
-	// window_size_t window_size = {1, 1};
+	// int32_t win_x;
+	// int32_t win_y;
+	
+	// win_x = 1;
+	// win_y = 1;
 	g.player.steps = 0;
 	g.map.amount_collectibles = 0;
 	if (argc != 2)
@@ -119,15 +126,17 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		ft_printf("Map: good\n");
+		ft_printf("Map: exists\n");
 	}
 	// init_game(&g, argv[1]);
 	
 	// ft_printf("X: %d Y: %d\n", window_size.x, window_size.y);
 	// g.mlx_ptr = mlx_init(window_size.x, window_size.y, "game of the year", true);
+	// mlx_get_monitor_size(0, &win_x, &win_y);
 	g.mlx_ptr = mlx_init(512, 512, "game of the year", true);
-	// mlx_get_monitor_size(0, &window_size.x, &window_size.y);
-	load_map(&g, argv[1]);
+
+	if (!load_map(&g, argv[1]))
+		return 1;
 	create_visited(&g);
 	if (!check_rectangle(&g) || !count_tiles(&g) || !collect_reachable(&g))
 		return (ft_printf("map sucks"), 1);
@@ -139,7 +148,11 @@ int	main(int argc, char **argv)
 	
 	mlx_loop(g.mlx_ptr);
 	mlx_terminate(g.mlx_ptr);
+
 	if (!g.mlx_ptr)
 		exit(EXIT_FAILURE);
+	char command[256];
+	sprintf(command, "leaks %d", getpid());
+	system(command);
 	return (0);	
 }
