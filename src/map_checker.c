@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:03:15 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/16 16:30:23 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/16 17:26:40 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,26 @@ int	count_tiles(t_game *g)
 		return (1);
 }
 
+int collect_reachable(t_game *g)
+{
+	uint32_t	x;
+	uint32_t	y;
 
+	y = 0;
+	while (y < g->map.y)
+	{
+		x = 0;
+		while (x < g->map.x)
+		{
+			ft_printf("map: %c\n visited: %c\n",g->map.map_ptr[y][x], g->map.visited[y][x]);
+			if (g->map.visited[y][x] != '1' && g->map.map_ptr[y][x] == 'C')
+				return (0);
+			x++;	
+		}
+		y++;
+	}
+	return (1);
+}
 int flood_fill(t_game *g, int x, int y) // add input to differentiate between map validity check on start or for use of only finding shortest path
 {
 	ft_printf("floodfill x: %d y: %d visited : %c\n", x, y, g->map.visited[y][x]);
@@ -85,19 +104,19 @@ int flood_fill(t_game *g, int x, int y) // add input to differentiate between ma
     if (g->map.map_ptr[y][x] == 'C')
         g->player.collected++;
     g->map.visited[y][x] = '1'; //path of 1s is the correct one. after all coins collected check map_ptr[x][y]/visited[x][y] if im only on 1(visited)
-    if (flood_fill(g, x - 1, y)) // check if valid
-        return (1);
-    if (flood_fill(g, x + 1, y)) // check if valid
-        return (1);
-    if (flood_fill(g, x , y - 1)) // check if valid
-        return (1);
-    if (flood_fill(g, x , y + 1)) // check if valid
-        return (1);
-	// flood_fill(g, x - 1, y);
-    // flood_fill(g, x + 1, y);
-	// flood_fill(g, x , y - 1);
-	// flood_fill(g, x , y + 1);
-    g->map.visited[y][x] = '0';
+    // if (flood_fill(g, x - 1, y)) // check if valid
+    //     return (1);
+    // if (flood_fill(g, x + 1, y)) // check if valid
+    //     return (1);
+    // if (flood_fill(g, x , y - 1)) // check if valid
+    //     return (1);
+    // if (flood_fill(g, x , y + 1)) // check if valid
+    //     return (1);
+	flood_fill(g, x - 1, y);
+    flood_fill(g, x + 1, y);
+	flood_fill(g, x , y - 1);
+	flood_fill(g, x , y + 1);
+    // g->map.visited[y][x] = '0';
     if (g->map.map_ptr[y][x] == 'C')
         g->player.collected--;
     return (0);
@@ -143,6 +162,23 @@ void	create_visited(t_game *g)
 		while (j < g->map.x)
 		{
 			ft_printf("%c", g->map.visited[i][j]);
+			j++;
+		}
+		ft_printf("\n");
+		j = 0;
+		// ft_printf("X bool: %d\n",i + 1);
+		i++;
+	}
+
+	ft_printf("\n");
+	ft_printf("\n");
+	i = 0;
+	j = 0;
+	while (i < g->map.y)
+	{
+		while (j < g->map.x)
+		{
+			ft_printf("%c", g->map.map_ptr[i][j]);
 			j++;
 		}
 		ft_printf("\n");

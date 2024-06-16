@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/16 16:29:13 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/16 17:24:30 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	main(int argc, char **argv)
 	// mlx_get_monitor_size(0, &window_size.x, &window_size.y);
 	load_map(&g, argv[1]);
 	create_visited(&g);
-	if (!check_rectangle(&g) || !count_tiles(&g))
+	if (!check_rectangle(&g) || !count_tiles(&g) || !collect_reachable(&g))
 		return (ft_printf("map sucks"), 1);
 	// g.text.texture = mlx_load_png("/Users/sruff/Desktop/42Projects/so_long/dank.png");
 	// render_map
