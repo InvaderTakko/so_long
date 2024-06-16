@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/09 17:46:13 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/16 16:27:16 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void load_map(t_game *g, const char *map_name);
 void check_next_tile(t_game *g, int x, int y);
 void	create_visited(t_game *g);
 int flood_fill(t_game *g, int x, int y);
+int	count_tiles(t_game *g);
+int	check_rectangle(t_game *g);
 // void load_tile(t_game *g, char c , int x, int y);
 
 

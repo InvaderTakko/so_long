@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:03:15 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/13 00:12:12 by stefan           ###   ########.fr       */
+/*   Updated: 2024/06/16 16:30:23 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,38 @@
 //floodfill
 
 // check if g->map.x is always the same = rectangle
-int check_rectangle(t_game *g)
+int	check_rectangle(t_game *g)
 {
-	int x_len;
-	int y;
-	
-	y = 0:
+	u_int32_t	x_len;
+	u_int32_t	y;
+
+	y = 0;
 	x_len = g->map.x;
-	
 	while (y < g->map.y)
 	{
 		if (x_len != g->map.x)
-			return (0);	
-		y++;	
+			return (0);
+		y++;
 	}
 	return (1);
 }
 
-int count_tiles(t_game *g)
+int	count_tiles(t_game *g)
 {
-	int y;
-	int x;
-	int start_counter = 0;
-	int exit_counter = 0;
-	int	collect_counter = 0;
-	
+	u_int32_t	y;
+	u_int32_t	x;
+	int	start_counter;
+	int	exit_counter;
+	int	collect_counter;
+
 	y = 0;
 	x = 0;
+	start_counter = 0;
+	exit_counter = 0;
+	collect_counter = 0;
 	while (y < g->map.y)
 	{
+		x = 0;
 		while (x < g->map.x)
 		{
 			if (g->map.map_ptr[y][x] == 'P')
@@ -55,22 +58,19 @@ int count_tiles(t_game *g)
 				exit_counter++;
 			else if (g->map.map_ptr[y][x] == 'C')
 				collect_counter++;
-			else if (g->map.map_ptr[y][x]  == '0' || g->map.map_ptr[y][x]  == '1' )
-					//do nothing
-			else 
-			{
-				return (1);
-			}
-			
-			x++;			
+			else if (g->map.map_ptr[y][x]  != '0' && g->map.map_ptr[y][x]  != '1' )
+				return (0);
+			x++;
 		}
 		y++;
 	}
 	g->map.amount_collectibles = collect_counter;
 	if (start_counter != 1 || exit_counter != 1 || collect_counter < 1)
 		return (0);
-	else return (1);	
+	else
+		return (1);
 }
+
 
 int flood_fill(t_game *g, int x, int y) // add input to differentiate between map validity check on start or for use of only finding shortest path
 {
