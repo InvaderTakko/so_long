@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 16:47:28 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/16 18:28:52 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/18 14:48:03 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void load_tile(t_game *g, char c , int x, int y)
 		mlx_image_to_window(g->mlx_ptr, (g->text.img)[0], x * TILE_SIZE, y * TILE_SIZE);
 		mlx_image_to_window(g->mlx_ptr, (g->text.img)[4], x * TILE_SIZE, y * TILE_SIZE);
 		g->map.amount_collectibles++;
+		// g->collectable.x = x;
 	}
 }
 
@@ -97,6 +98,9 @@ static void	set_map(t_game *g, char *map_str)
 	ft_printf("Map: X: %d Y: %d\n", g->map.x, g->map.y);
 	// render_map(g);
 	spawn_objects(g);
+	g->collectables = ft_calloc(g->map.amount_collectibles + 1, sizeof(t_collectable));
+	if (!g->collectables)
+		exit(EXIT_FAILURE);
 	
 }
 
@@ -108,8 +112,9 @@ int load_map(t_game *g, const char *map_name)
 	char	*temp_ptr;
 	char	*map_str;
 	
-	map_name = NULL;
-	fd = open("/Users/sruff/Desktop/42Projects/so_long/maps/map.ber", O_RDONLY);
+	// map_name = NULL;
+	// fd = open("/Users/sruff/Desktop/42Projects/so_long/maps/map.ber", O_RDONLY);
+	fd = open(map_name, O_RDONLY);
 	if (fd < 0)
 	{
 		ft_printf("Error: could not open file\n");

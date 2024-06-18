@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/16 18:08:34 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/18 16:17:21 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@
 # include <stdbool.h>
 
 
-typedef struct window_size
+typedef struct s_collectable
 {
-	int32_t x;
-	int32_t y;
-}	window_size_t;
+	int x;
+	int y;
+	int collected;
+}	t_collectable;
 typedef struct s_texture
 {
 	mlx_image_t	*img[IMG_NUM];
@@ -47,6 +48,7 @@ typedef struct s_map
 	int				exit_x;
 	int				exit_y;
 	char			**visited;
+	char 			prev;
 	char	**map_ptr;
 }	t_map;
 typedef struct s_player
@@ -63,6 +65,7 @@ typedef struct s_game
 	t_player	player;
 	t_map	map;
 	t_texture text;
+	t_collectable *collectables;
 	
 }	t_game;
 
@@ -70,7 +73,7 @@ void render_loop(void *param);
 int load_map(t_game *g, const char *map_name);
 void check_next_tile(t_game *g, int x, int y);
 void	create_visited(t_game *g);
-int flood_fill(t_game *g, int x, int y);
+int flood_fill(t_game *g, int x, int y, int steps);
 int	count_tiles(t_game *g);
 int	check_rectangle(t_game *g);
 int collect_reachable(t_game *g);
