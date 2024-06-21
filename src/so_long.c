@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/18 15:18:41 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/21 15:25:44 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static void key_press(mlx_key_data_t key_data, void *param)
 
 	old_y = g->player.y;
 	old_x = g->player.x;
-	// ft_printf("Keycode: %d\n", key_data.key);
-	// if (key_data.key == MLX_KEY_W || key_data.key == MLX_KEY_UP)
 	if ((key_data.key == MLX_KEY_W || key_data.key == MLX_KEY_UP) && (key_data.action == MLX_PRESS || key_data.action == MLX_REPEAT ))
 		check_next_tile(g, g->player.x, g->player.y - 1);
 	else if ((key_data.key == MLX_KEY_S || key_data.key == MLX_KEY_DOWN) && (key_data.action == MLX_PRESS || key_data.action == MLX_REPEAT ))
@@ -38,6 +36,7 @@ static void key_press(mlx_key_data_t key_data, void *param)
 	else if (key_data.key == MLX_KEY_ESCAPE)
 	{
 		ft_printf("ESC\n");
+		cleanup_game(g);
 		// mlx_destroy_window(g->mlx_ptr);
 		exit(EXIT_SUCCESS);
 	}
@@ -48,91 +47,29 @@ static void key_press(mlx_key_data_t key_data, void *param)
 	(void)g;
 }
 
-// static void key_press(mlx_key_data_t key_data, void *param)
-// {
-// 	t_game *g = (t_game *)param;
-// 	// ft_printf("Keycode: %d\n", key_data.key);
-// 	if (key_data.key == MLX_KEY_W || key_data.key == MLX_KEY_UP)
-// 	{
-// 		g->player.y -= 50;
-// 		ft_printf("UP\n");
-// 	}
-// 	else if (key_data.key == MLX_KEY_S || key_data.key == MLX_KEY_DOWN)
-// 	{
-// 		g->player.y += 50;
-// 		ft_printf("DOWN\n");
-// 	}
-// 	else if (key_data.key == MLX_KEY_A || key_data.key == MLX_KEY_LEFT)
-// 	{
-// 		g->player.x -= 50;
-// 		ft_printf("LEFT\n");
-// 	}
-// 	else if (key_data.key == MLX_KEY_D || key_data.key == MLX_KEY_RIGHT)
-// 	{
-// 		g->player.x += 50;
-// 		ft_printf("RIGHT\n");
-		
-// 	}
-// 	else if (key_data.key == MLX_KEY_ESCAPE)
-// 	{
-// 		ft_printf("ESC\n");
-// 		// mlx_destroy_window(g->mlx_ptr);
-// 		exit(EXIT_SUCCESS);
-// 	}
-// 	mlx_image_to_window(g->mlx_ptr, (g->text.img)[1], g->player.x * TILE_SIZE, g->player.y * TILE_SIZE);
-// 	// update_render(param);
-// 	(void)g;
-// }
-
 int	main(int argc, char **argv)
 {
 	t_game	g;
-	// int32_t win_x;
-	// int32_t win_y;
-	
-	// win_x = 1;
-	// win_y = 1;
-	g.player.steps = 0;
-	g.map.amount_collectibles = 0;
+
+	ft_memset(&g, 0, sizeof(t_game));
 	if (argc != 2)
-	{
-		ft_printf("Error: input should look like \"./so_long <map.ber>\"\n ");
-		exit(EXIT_FAILURE);
-	}
-	if (ft_strncmp(argv[1] + ft_strlen(argv[1]) -4, ".ber", 5))
-	{
-		ft_printf("Error: input should look like \"./so_long <map.ber>\"\n ");
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		ft_printf("Map: exists\n");
-	}
-	// init_game(&g, argv[1]);
-	
-	// ft_printf("X: %d Y: %d\n", window_size.x, window_size.y);
-	// g.mlx_ptr = mlx_init(window_size.x, window_size.y, "game of the year", true);
-	// mlx_get_monitor_size(0, &win_x, &win_y);
+		exit_error(&g, "Input should look like \"./so_long <map.ber>\"");
+	if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".ber", 5))
+		exit_error(&g, "Map file should have .ber extension");
 	g.mlx_ptr = mlx_init(512, 512, "game of the year", true);
-
-	if (!load_map(&g, argv[1]))
-		return 1;
-	create_visited(&g);
-	if (!check_rectangle(&g) || !count_tiles(&g) || !collect_reachable(&g))
-		return (ft_printf("map sucks"), 1);
-	// g.text.texture = mlx_load_png("/Users/sruff/Desktop/42Projects/so_long/dank.png");
-	// render_map
-	mlx_key_hook(g.mlx_ptr, key_press, &g);
-	// mlx_loop_hook()
-	// mlx_loop_hook(g.mlx_ptr, render_loop, &g);
-	
-	mlx_loop(g.mlx_ptr);
-	mlx_terminate(g.mlx_ptr);
-
+	// g.mlx_ptr->width
+	// g.mlx_ptr->height
+	// mlx_get_monitor_size(0, &win_x, &win_y); only works after you started/created a window already
 	if (!g.mlx_ptr)
-		exit(EXIT_FAILURE);
-	// char command[256];
-	// sprintf(command, "leaks %d", getpid());
+		exit_error(&g, "Failed to initialize MLX");
+	if (!load_map(&g, argv[1]))
+		exit_error(&g, "Failed to load map");
+	create_visited(&g);
+	if (!check_rectangle(&g) || !count_tiles(&g) || !collect_reachable(&g) || !check_walls(&g))
+		exit_error(&g, "Invalid map");
+	mlx_key_hook(g.mlx_ptr, key_press, &g);
+	mlx_loop(g.mlx_ptr);
+	cleanup_game(&g);
 	system("leaks so_long");
-	return (0);	
+	return (0);
 }
