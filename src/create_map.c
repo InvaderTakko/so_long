@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 16:47:28 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/18 14:48:03 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/21 14:14:47 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,8 @@ static void	set_map(t_game *g, char *map_str)
 	spawn_objects(g);
 	g->collectables = ft_calloc(g->map.amount_collectibles + 1, sizeof(t_collectable));
 	if (!g->collectables)
-		exit(EXIT_FAILURE);
-	
+		exit_error(g, "Memory allocation failed for collectables");
 }
-
 
 int load_map(t_game *g, const char *map_name)
 {
@@ -111,15 +109,12 @@ int load_map(t_game *g, const char *map_name)
 	char	*line;
 	char	*temp_ptr;
 	char	*map_str;
-	
+
 	// map_name = NULL;
 	// fd = open("/Users/sruff/Desktop/42Projects/so_long/maps/map.ber", O_RDONLY);
 	fd = open(map_name, O_RDONLY);
 	if (fd < 0)
-	{
-		ft_printf("Error: could not open file\n");
-		exit(EXIT_FAILURE);
-	}
+		exit_error(g, "Could not open map file");
 	map_str = malloc(sizeof(char));
 	map_str[0] =  '\0';
 	while (1)
@@ -134,9 +129,8 @@ int load_map(t_game *g, const char *map_name)
 		free(map_str);
 		free(line);
 		if (!temp_ptr)
-			return 0;
+			return (0);
 		map_str = temp_ptr;
-		
 	}
 	ft_printf("after GNL loop\n");
 	if	(map_str && *map_str)
@@ -146,5 +140,5 @@ int load_map(t_game *g, const char *map_name)
 	// free(map_str);	
 	// create_visited(g);
 	close(fd);
-	return 1;
+	return (1);
 }

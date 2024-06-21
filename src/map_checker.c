@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:03:15 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/18 16:44:30 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/21 15:00:38 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,28 @@
 //floodfill
 
 // check if g->map.x is always the same = rectangle
+int	check_walls(t_game *g)
+{
+	uint32_t	x;
+	u_int32_t	y;
+
+	x = 0;
+	y = 0;
+	while (x < g->map.x)
+	{
+		if (g->map.map_ptr[0][x] != '1' || g->map.map_ptr[g->map.y - 1][x] != '1')
+			exit_error(g, "map not sourrounded by walls");
+		x++;
+	}
+	while (y < g->map.y)
+	{
+		if (g->map.map_ptr[y][0] != '1' || g->map.map_ptr[y][g->map.x - 1] != '1')
+			exit_error(g, "map not sourrounded by walls");
+		y++;
+	}
+	return (1);
+}
+
 int	check_rectangle(t_game *g)
 {
 	u_int32_t	x_len;
@@ -28,7 +50,7 @@ int	check_rectangle(t_game *g)
 	while (y < g->map.y)
 	{
 		if (x_len != ft_strlen(g->map.map_ptr[y]))
-			return (0);
+			exit_error(g, "map not rectangular");
 		y++;
 	}
 	return (1);
@@ -57,20 +79,20 @@ int	count_tiles(t_game *g)
 			else if (g->map.map_ptr[y][x] == 'E')
 				exit_counter++;
 			else if (g->map.map_ptr[y][x] == 'C')
-			{	
+			{
 				g->collectables[collect_counter].x = x;
 				g->collectables[collect_counter].y = y;
 				collect_counter++;
-			}	
+			}
 			else if (g->map.map_ptr[y][x]  != '0' && g->map.map_ptr[y][x]  != '1' )
-				return (0);
+				return (exit_error(g, "map has invalid character"), 0);
 			x++;
 		}
 		y++;
 	}
 	// g->map.amount_collectibles = collect_counter;
 	if (start_counter != 1 || exit_counter != 1 || collect_counter < 1)
-		return (0);
+		return (exit_error(g, "map has too few/many P/E/C tiles"), 0);
 	else
 		return (1);
 }
@@ -89,7 +111,7 @@ int collect_reachable(t_game *g)
 			// ft_printf("map: %c\n visited: %c\n",g->map.map_ptr[y][x], g->map.visited[y][x]);
 			if (g->map.visited[y][x] == '0' && g->map.map_ptr[y][x] == 'C')
 				return (0);
-			x++;	
+			x++;
 		}
 		y++;
 	}
@@ -97,7 +119,7 @@ int collect_reachable(t_game *g)
 }
 int flood_fill(t_game *g, int x, int y, int steps) // add input to differentiate between map validity check on start or for use of only finding shortest path
 {
-	ft_printf("floodfill x: %d y: %d visited : %c\n", x, y, g->map.visited[y][x]);
+	// ft_printf("floodfill x: %d y: %d visited : %c\n", x, y, g->map.visited[y][x]);
     // if (x >= (int)g->map.x || y >= (int)g->map.y || x < 0 || y < 0)
 	if (x < 0 || x >= (int)g->map.x || y < 0 || y >= (int)g->map.y || g->map.map_ptr[y][x] == '1' || \
 	(g->map.visited[y][x] != '0' && g->map.visited[y][x] <= steps + '0'))
@@ -179,9 +201,4 @@ void	create_visited(t_game *g)
 	// ft_printf("collectable on map: %d\n collected: %d\n", g->map.amount_collectibles, g->player.collected);
 	//if g->player.collected != g->map.amount_collectibles = cant collect all of them -> game_beatable = 0
 }
-
-
-
-
-
 

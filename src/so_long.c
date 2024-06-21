@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/21 15:25:44 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/21 16:39:12 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argc, char **argv)
 		exit_error(&g, "Input should look like \"./so_long <map.ber>\"");
 	if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".ber", 5))
 		exit_error(&g, "Map file should have .ber extension");
-	g.mlx_ptr = mlx_init(512, 512, "game of the year", true);
+	g.mlx_ptr = mlx_init(512, 512, "game of the year", false);
 	// g.mlx_ptr->width
 	// g.mlx_ptr->height
 	// mlx_get_monitor_size(0, &win_x, &win_y); only works after you started/created a window already
