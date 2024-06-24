@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_and_move.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:14:13 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/24 16:19:45 by stefan           ###   ########.fr       */
+/*   Updated: 2024/06/24 22:52:03 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	check_collected(t_game *g, int x, int y)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < g->map.amount_collectibles)
@@ -31,9 +31,10 @@ static void	check_collected(t_game *g, int x, int y)
 	}
 }
 
-void check_next_tile(t_game *g, int x, int y)
+void	check_next_tile(t_game *g, int x, int y)
 {
-	if (g->map.map_ptr[y][x] == '0' || g->map.map_ptr[y][x] == 'P' || g->map.map_ptr[y][x] == 'E' || g->map.map_ptr[y][x] == 'C')
+	if (g->map.map_ptr[y][x] == '0' || g->map.map_ptr[y][x] == 'P' ||
+		g->map.map_ptr[y][x] == 'E' || g->map.map_ptr[y][x] == 'C')
 	{
 		if (g->player.collected == g->map.amount_collectibles)
 		{
@@ -44,16 +45,14 @@ void check_next_tile(t_game *g, int x, int y)
 		g->player.y = y;
 		g->player.steps++;
 		render_steps(g);
-		//increase steps
 		if (g->map.map_ptr[y][x] == 'C')
 			check_collected(g, x, y);
-		if (g->player.collected == g->map.amount_collectibles &&  g->map.map_ptr[y][x] == 'E')
+		if (g->player.collected == g->map.amount_collectibles
+			&& g->map.map_ptr[y][x] == 'E')
 		{
-			ft_printf("You won in %d steps!\n", g->player.steps);
+			ft_printf("You won in %d steps!\n", g->player.steps); // fix exit
 			cleanup_game(g);
-			system("leaks so_long");
 			exit(EXIT_SUCCESS);
-			// mlx_close_window(g->mlx_ptr);
 		}
 		g->map.prev = g->map.visited[y][x];
 	}
