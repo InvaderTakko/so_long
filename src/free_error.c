@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 12:48:39 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/21 15:23:24 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/24 16:07:37 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	cleanup_game(t_game *g)
 		free_map(g->map.visited);
 	if (g->collectables)
 		free(g->collectables);
+	if (g->steps_img)
+    	mlx_delete_image(g->mlx_ptr, g->steps_img);
 	free_textures(g);
+
 	if (g->mlx_ptr)
 		mlx_terminate(g->mlx_ptr);
 }

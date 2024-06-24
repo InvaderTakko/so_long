@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 16:47:28 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/21 14:14:47 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/24 17:00:41 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static void load_tile(t_game *g, char c , int x, int y)
 
 static void load_pngs(t_game *g)
 {
-	int	i = 0;
+	int	i;
+	i = 0;
 	(g->text.texture)[0] = mlx_load_png(IMG_TILE);
 	(g->text.texture)[1] = mlx_load_png(IMG_PLAYER);
 	(g->text.texture)[2] = mlx_load_png(IMG_WALL);
@@ -57,11 +58,14 @@ static void load_pngs(t_game *g)
 
 static void	spawn_objects(t_game *g)
 {
-	u_int32_t x = 0;
-	u_int32_t y = 0;
-	char **map = g->map.map_ptr;
+	u_int32_t x;
+	u_int32_t y;
+	char **map;
 	char	c;
 
+	x = 0;
+	y = 0;
+	map = g->map.map_ptr;
 	load_pngs(g);
 	while (y < g->map.y)
 	{

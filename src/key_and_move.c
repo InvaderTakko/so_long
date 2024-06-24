@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_and_move.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:14:13 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/21 15:55:54 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/24 16:19:45 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void check_next_tile(t_game *g, int x, int y)
 		g->player.x = x;
 		g->player.y = y;
 		g->player.steps++;
+		render_steps(g);
 		//increase steps
 		if (g->map.map_ptr[y][x] == 'C')
 			check_collected(g, x, y);

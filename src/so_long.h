@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/18 16:17:21 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/24 15:44:02 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_game
 	t_map	map;
 	t_texture text;
 	t_collectable *collectables;
+	mlx_image_t *steps_img;
 	
 }	t_game;
 
@@ -77,6 +78,11 @@ int flood_fill(t_game *g, int x, int y, int steps);
 int	count_tiles(t_game *g);
 int	check_rectangle(t_game *g);
 int collect_reachable(t_game *g);
+int	check_walls(t_game *g);
+void	exit_error(t_game *g, const char *error_message);
+void render_steps(t_game *g);
+void exit_success(t_game *g, const char *message);
+void	cleanup_game(t_game *g);
 // void load_tile(t_game *g, char c , int x, int y);
 
 

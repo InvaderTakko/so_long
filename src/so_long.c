@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/21 16:39:12 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/24 17:35:26 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,31 @@
 // {
 	
 // }
+
+void render_steps(t_game *g)
+{
+    char *steps_num;
+    char *steps_str;
+    char *temp;
+
+    steps_num = ft_itoa(g->player.steps);
+    if (!steps_num)
+        exit_error(g, "Memory allocation failed for ft_ioa");
+    temp = ft_strjoin("Steps: ", steps_num);
+    free(steps_num);
+    if (!temp)
+        exit_error(g, "Memory allocation failed for ft_strjoin");
+    steps_str = ft_strdup(temp);
+    free(temp);
+    if (!steps_str)
+        exit_error(g, "Memory allocation failed for ft_strdup");
+    if (g->steps_img)
+        mlx_delete_image(g->mlx_ptr, g->steps_img);
+    g->steps_img = mlx_put_string(g->mlx_ptr, steps_str, 10, 10);
+    free(steps_str);
+    if (!g->steps_img)
+        exit_error(g, "Failed to render steps on screen");
+}
 
 static void key_press(mlx_key_data_t key_data, void *param)
 {
@@ -67,6 +92,7 @@ int	main(int argc, char **argv)
 	create_visited(&g);
 	if (!check_rectangle(&g) || !count_tiles(&g) || !collect_reachable(&g) || !check_walls(&g))
 		exit_error(&g, "Invalid map");
+	render_steps(&g);	
 	mlx_key_hook(g.mlx_ptr, key_press, &g);
 	mlx_loop(g.mlx_ptr);
 	cleanup_game(&g);
