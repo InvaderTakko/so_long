@@ -24,7 +24,7 @@ OBJS    := ${SRCS:.c=.o}
 all: libmlx libft $(NAME)
 
 libmlx:
-	git submodule update MLX42
+	git submodule update --init --recursive
 	@cmake $(LIBMLX) -B $(LIBMLX)/build
 	@cmake --build $(LIBMLX)/build -j4 
 
