@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/25 13:55:01 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/25 16:36:32 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	check_input_key(t_game *g, mlx_key_data_t key_data)
 		check_next_tile(g, g->player.x + 1, g->player.y);
 	else if (key_data.key == MLX_KEY_ESCAPE)
 	{
-		ft_printf("ESC\n");
 		cleanup_game(g);
 		exit(EXIT_SUCCESS);
 	}
