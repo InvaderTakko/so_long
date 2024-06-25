@@ -6,18 +6,12 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 20:03:15 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/24 23:42:54 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/25 14:06:07 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-//check for valid characters
-//check valid path
-//find shortest path
-//floodfill
-
-// check if g->map.x is always the same = rectangle
 int	check_walls(t_game *g)
 {
 	int32_t	x;
@@ -114,7 +108,6 @@ void	create_visited(t_game *g)
 	visited = NULL;
 	g->player.collected = 0;
 	flood_fill(g, g->map.exit_x, g->map.exit_y, 0);
-
 }
 
 	// i = 0;
@@ -148,5 +141,3 @@ void	create_visited(t_game *g)
 	// 	// ft_printf("X bool: %d\n",i + 1);
 	// 	i++;
 	// }
-	// ft_printf("collectable on map: %d\n collected: %d\n", g->map.amount_collectibles, g->player.collected);
-	//if g->player.collected != g->map.amount_collectibles = cant collect all of them -> game_beatable = 0

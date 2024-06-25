@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 12:48:39 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/24 22:48:26 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/25 13:57:03 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ void	cleanup_game(t_game *g)
 	free_textures(g);
 	if (g->mlx_ptr)
 		mlx_terminate(g->mlx_ptr);
-	system("leaks so_long");
 }
+//system("leaks so_long");
 
 void	exit_error(t_game *g, const char *error_message)
 {
 	ft_printf("Error\n%s\n", error_message);
 	cleanup_game(g);
-	system("leaks so_long");
 	exit(EXIT_FAILURE);
 }
+
+//system("leaks so_long");

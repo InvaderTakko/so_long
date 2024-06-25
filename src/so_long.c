@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:06:27 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/24 22:20:26 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/25 13:55:01 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,5 @@ int	main(int argc, char **argv)
 	mlx_key_hook(g.mlx_ptr, key_press, &g);
 	mlx_loop(g.mlx_ptr);
 	cleanup_game(&g);
-	system("leaks so_long");
 	return (0);
 }

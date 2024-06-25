@@ -6,16 +6,14 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 16:47:28 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/24 22:48:51 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/25 14:07:03 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-
 static void	load_tile(t_game *g, char c, int x, int y)
 {
-
 	if (c == '0')
 		load_image(g, 0, x * TILE, y * TILE);
 	else if (c == '1')
@@ -140,4 +138,3 @@ int	load_map(t_game *g, const char *map_name)
 		return (0);
 	return (1);
 }
-

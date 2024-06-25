@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:13:10 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/24 23:47:11 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/25 14:11:51 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@
 # define IMG_GOAL "./img/goal.png"
 # define IMG_COLLECT "./img/collect.png"
 
-
-
 # include <stdlib.h>
 # include "./libft/libft.h"
 # include "../MLX42/include/MLX42/MLX42.h"
-# include <stdbool.h>
 
 typedef struct s_tile_vars
 {
@@ -82,27 +79,24 @@ typedef struct s_game
 	mlx_image_t		*steps_img;
 }	t_game;
 
-void	render_loop(void *param);
 int		load_map(t_game *g, const char *map_name);
 void	set_map(t_game *g, char *map_str);
 void	load_image(t_game *g, int index, int tx, int ty);
 void	check_next_tile(t_game *g, int x, int y);
 void	create_visited(t_game *g);
+
 int		flood_fill(t_game *g, int x, int y, int steps);
 int		count_tiles(t_game *g);
 int		check_rectangle(t_game *g);
 int		collect_reachable(t_game *g);
 int		check_walls(t_game *g);
-void	exit_error(t_game *g, const char *error_message);
+
 void	render_steps(t_game *g);
-void	exit_success(t_game *g, const char *message);
+
 void	cleanup_game(t_game *g);
+void	exit_error(t_game *g, const char *error_message);
 
 int		load_map_two(t_game *g, char *map_str, int fd);
 void	count_tiles_loop(t_game *g, t_tile_vars *t);
-// void load_tile(t_game *g, char c , int x, int y);
-
-
-
 
 #endif
