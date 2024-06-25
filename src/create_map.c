@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 16:47:28 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/25 14:07:03 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/25 14:30:16 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	load_tile(t_game *g, char c, int x, int y)
 	}
 	else if (c == 'P')
 	{
+		load_image(g, 0, x * TILE, y * TILE);
 		load_image(g, 1, x * TILE, y * TILE);
 		g->player.x = x;
 		g->player.y = y;
