@@ -48,7 +48,7 @@ fclean: clean
 	
 re: fclean all
 
-.PHONY: all clean fclean re libmlx libft'
+.PHONY: all clean fclean re libmlx libft
 
 #ARM MACBOOK
 # NAME    := so_long
