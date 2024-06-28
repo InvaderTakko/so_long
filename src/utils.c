@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 22:18:07 by sruff             #+#    #+#             */
-/*   Updated: 2024/06/24 23:42:30 by sruff            ###   ########.fr       */
+/*   Updated: 2024/06/28 23:59:04 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	load_map_two(t_game *g, char *map_str, int fd)
 	{
 		close(fd);
 		free(map_str);
-		return (ft_printf("map is empty \n"), 0);
+		return (exit_error(g, "Map is empty \n"), 0);
 	}
 	close(fd);
 	return (1);
@@ -50,7 +50,7 @@ void	count_tiles_loop(t_game *g, t_tile_vars *t)
 			}
 			else if (g->map.map_ptr[t->y][t->x] != '0' &&
 				g->map.map_ptr[t->y][t->x] != '1')
-				exit_error(g, "map has invalid character");
+				exit_error(g, "Map has invalid character");
 			t->x++;
 		}
 		t->y++;
